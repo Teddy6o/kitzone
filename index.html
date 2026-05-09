@@ -319,11 +319,116 @@
   /* TOAST */
   .toast {
     position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(20px);
-    background: var(--dark); color: #fff; padding: 12px 24px; border-radius: 12px;
+    background: #1a1a1a; color: #fff; padding: 12px 24px; border-radius: 12px;
     font-size: 14px; font-weight: 600; z-index: 9999; opacity: 0;
     transition: opacity 0.25s, transform 0.25s; pointer-events: none; white-space: nowrap;
+    display:flex;align-items:center;gap:8px;
   }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* NAV CART */
+  .nav-cart-btn {
+    background: var(--dark); color: #fff; border: none; border-radius: 10px;
+    padding: 8px 14px; cursor: pointer; margin-left: 12px; flex-shrink: 0;
+    display: flex; align-items: center; gap: 6px; position: relative;
+    transition: background 0.15s;
+  }
+  .nav-cart-btn:hover { background: var(--accent); }
+  .cart-badge {
+    background: var(--accent); color: #fff; font-size: 11px; font-weight: 800;
+    border-radius: 10px; padding: 2px 7px; font-family: var(--font-body);
+    min-width: 20px; text-align: center;
+  }
+
+  /* CART OVERLAY */
+  .cart-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 3000;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s; backdrop-filter: blur(3px);
+  }
+  .cart-overlay.open { opacity: 1; pointer-events: all; }
+
+  /* CART DRAWER */
+  .cart-drawer {
+    position: fixed; top: 0; right: 0; bottom: 0; width: 420px; max-width: 100vw;
+    background: #fff; z-index: 3001; display: flex; flex-direction: column;
+    transform: translateX(100%); transition: transform 0.35s cubic-bezier(.4,0,.2,1);
+    box-shadow: -8px 0 40px rgba(0,0,0,0.18);
+  }
+  .cart-drawer.open { transform: translateX(0); }
+  .cart-drawer-header {
+    padding: 20px 24px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+  }
+  .cart-close-btn {
+    background: var(--light); border: none; width: 32px; height: 32px; border-radius: 8px;
+    cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center;
+    color: var(--dark); transition: background 0.15s;
+  }
+  .cart-close-btn:hover { background: var(--border); }
+  .cart-drawer-body { flex: 1; overflow-y: auto; padding: 16px 24px; }
+  .cart-drawer-footer {
+    padding: 20px 24px; border-top: 1px solid var(--border); flex-shrink: 0;
+    background: #fff;
+  }
+
+  /* CART ITEM */
+  .cart-item {
+    display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+  .cart-item:last-child { border-bottom: none; }
+  .cart-item-img {
+    width: 72px; height: 72px; border-radius: 10px; object-fit: cover;
+    background: var(--light); flex-shrink: 0;
+  }
+  .cart-item-placeholder {
+    width: 72px; height: 72px; border-radius: 10px; background: var(--light);
+    flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 24px;
+  }
+  .cart-item-info { flex: 1; min-width: 0; }
+  .cart-item-name { font-size: 14px; font-weight: 700; margin-bottom: 2px; line-height: 1.3; }
+  .cart-item-size { font-size: 12px; color: var(--gray); margin-bottom: 3px; }
+  .cart-item-flocage { font-size: 12px; color: var(--accent2); font-weight: 600; margin-bottom: 6px; }
+  .cart-item-price { font-family: var(--font-title); font-size: 18px; font-weight: 700; }
+  .cart-item-controls { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+  .qty-btn {
+    width: 26px; height: 26px; border-radius: 6px; border: 1.5px solid var(--border);
+    background: var(--light); cursor: pointer; font-size: 15px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; transition: all 0.15s;
+  }
+  .qty-btn:hover { background: var(--dark); color: #fff; border-color: var(--dark); }
+  .qty-val { font-weight: 700; font-size: 14px; min-width: 20px; text-align: center; }
+  .remove-item-btn {
+    margin-left: auto; background: none; border: none; color: #ccc;
+    cursor: pointer; font-size: 16px; padding: 2px 4px; border-radius: 5px; transition: color 0.15s;
+  }
+  .remove-item-btn:hover { color: var(--accent); }
+
+  /* LIVRAISON BAR */
+  .cart-livraison-bar {
+    background: linear-gradient(135deg, #f0fdf4, #dcfce7); border: 1px solid #86efac;
+    border-radius: 10px; padding: 10px 14px; margin-bottom: 16px; font-size: 13px;
+    font-weight: 600; color: #166534;
+  }
+
+  /* CHECKOUT BTN */
+  .btn-checkout {
+    width: 100%; background: var(--dark); color: #fff; border: none;
+    padding: 16px; border-radius: 12px; font-size: 16px; font-weight: 700;
+    font-family: var(--font-body); cursor: pointer; transition: background 0.15s;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+  }
+  .btn-checkout:hover { background: #222; }
+
+  /* SIZE BUTTONS */
+  .size-btn {
+    padding: 8px 16px; border-radius: 8px; border: 1.5px solid var(--border);
+    background: #fff; font-family: var(--font-body); font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: all 0.15s; color: var(--dark);
+  }
+  .size-btn:hover:not(.unavailable) { border-color: var(--dark); }
+  .size-btn.selected { background: var(--dark); color: #fff; border-color: var(--dark); }
+  .size-btn.unavailable { opacity: 0.35; cursor: not-allowed; text-decoration: line-through; }
 </style>
 </head>
 <body>
@@ -348,6 +453,10 @@
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
     <input type="text" id="nav-search-input" placeholder="Rechercher un maillot..." onkeyup="handleNavSearch(event)">
   </div>
+  <button class="nav-cart-btn" onclick="openCart()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+    <span id="nav-cart-count" class="cart-badge" style="display:none">0</span>
+  </button>
 </nav>
 
 <!-- CONFIG SHOPIFY -->
@@ -598,10 +707,10 @@
         <div class="modal-desc" id="modal-desc"></div>
 
         <!-- TAILLE -->
-        <div style="margin-bottom:20px;">
-          <div style="font-size:12px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:10px;">Choisir la taille</div>
+        <div id="size-wrapper" style="margin-bottom:20px;">
+          <div style="font-size:12px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:10px;">Choisir la taille <span style="color:var(--accent);">*</span></div>
           <div id="size-options" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
-          <div id="size-error" style="display:none;color:var(--accent);font-size:12px;margin-top:6px;font-weight:600;">⚠️ Veuillez choisir une taille</div>
+          <div id="size-error" style="display:none;color:var(--accent);font-size:12px;margin-top:8px;font-weight:600;">⚠️ Veuillez choisir une taille avant de continuer</div>
         </div>
 
         <!-- FLOCAGE PERSONNALISATION -->
@@ -630,7 +739,7 @@
         </div>
 
         <div class="modal-actions">
-          <button class="btn-primary" id="modal-add-btn" style="width:100%;padding:16px;font-size:16px;" onclick="addToShopifyCart()">
+          <button class="btn-primary" id="modal-add-btn" style="width:100%;padding:16px;font-size:16px;" onclick="addToCart()">
             🛒 Ajouter au panier
           </button>
         </div>
@@ -641,6 +750,33 @@
 </div>
 
 <div class="toast" id="toast"></div>
+
+<!-- CART SLIDE-IN -->
+<div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cart-drawer">
+  <div class="cart-drawer-header">
+    <div style="font-family:var(--font-title);font-size:22px;font-weight:800;">Mon Panier <span id="cart-count-label" style="font-size:16px;font-weight:500;color:var(--gray);"></span></div>
+    <button class="cart-close-btn" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-drawer-body" id="cart-drawer-body">
+    <div id="cart-empty-msg" style="text-align:center;padding:60px 20px;">
+      <div style="font-size:52px;margin-bottom:12px;">🛒</div>
+      <div style="font-family:var(--font-title);font-size:22px;font-weight:700;margin-bottom:6px;">Panier vide</div>
+      <div style="color:var(--gray);font-size:14px;">Ajoutez des maillots pour commencer</div>
+    </div>
+    <div id="cart-items"></div>
+  </div>
+  <div class="cart-drawer-footer" id="cart-footer" style="display:none;">
+    <div class="cart-livraison-bar" id="cart-livraison-bar"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+      <span style="font-size:15px;font-weight:600;">Total</span>
+      <span id="cart-total-price" style="font-family:var(--font-title);font-size:24px;font-weight:900;color:var(--dark);">0,00 €</span>
+    </div>
+    <div style="font-size:12px;color:var(--gray);text-align:center;margin-bottom:12px;">Livraison calculée au checkout</div>
+    <button class="btn-checkout" onclick="procederPaiement()">Procéder au paiement</button>
+    <button onclick="closeCart()" style="width:100%;margin-top:10px;background:none;border:none;font-size:13px;color:var(--gray);cursor:pointer;padding:8px;font-family:var(--font-body);">← Continuer mes achats</button>
+  </div>
+</div>
 
 <footer>
   <div><strong>KitZone</strong></div>
@@ -843,10 +979,12 @@ function handleNavSearch(event) {
 // ========== MODAL ==========
 let currentProduct = null;
 let selectedVariantId = null;
+let selectedVariantTitle = '';
 
 function openModal(img, title, vendor, price, desc, handle) {
   currentProduct = allProducts.find(p => p.handle === handle) || null;
   selectedVariantId = null;
+  selectedVariantTitle = '';
 
   document.getElementById('modal-img').src = img || '';
   document.getElementById('modal-img').style.display = img ? 'block' : 'none';
@@ -855,36 +993,45 @@ function openModal(img, title, vendor, price, desc, handle) {
   document.getElementById('modal-price').textContent = price;
   document.getElementById('modal-desc').textContent = desc || 'Découvrez ce maillot de grande qualité.';
 
-  // Build size buttons from variants
+  // Build size buttons
   const sizeContainer = document.getElementById('size-options');
+  const sizeWrapper = document.getElementById('size-wrapper');
   document.getElementById('size-error').style.display = 'none';
   sizeContainer.innerHTML = '';
 
   if (currentProduct && currentProduct.variants) {
     const variants = currentProduct.variants;
-    // If only one variant with no real title, auto-select it and hide size picker
     const hasRealSizes = variants.length > 1 || (variants[0] && variants[0].title !== 'Default Title');
     if (!hasRealSizes) {
-      selectedVariantId = variants[0].id;
-      sizeContainer.closest('div[style*="margin-bottom:20px"]').style.display = 'none';
+      // Produit sans vraies variantes → afficher tailles standard, toutes liées au même variant
+      sizeWrapper.style.display = 'block';
+      const defaultVariantId = variants[0].id;
+      ['S', 'M', 'L', 'XL', 'XXL'].forEach(size => {
+        const btn = document.createElement('button');
+        btn.className = 'size-btn';
+        btn.textContent = size;
+        btn.onclick = () => {
+          document.querySelectorAll('#size-options .size-btn').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          selectedVariantId = defaultVariantId;
+          selectedVariantTitle = size;
+          document.getElementById('size-error').style.display = 'none';
+        };
+        sizeContainer.appendChild(btn);
+      });
     } else {
-      sizeContainer.closest('div[style*="margin-bottom:20px"]').style.display = 'block';
+      sizeWrapper.style.display = 'block';
       variants.forEach(v => {
         const btn = document.createElement('button');
+        btn.className = 'size-btn';
         btn.textContent = v.title;
-        btn.dataset.variantId = v.id;
-        const available = v.available !== false;
-        btn.style.cssText = `padding:8px 16px;border-radius:8px;border:1.5px solid var(--border);background:#fff;font-family:var(--font-body);font-size:13px;font-weight:600;cursor:${available ? 'pointer' : 'not-allowed'};opacity:${available ? '1' : '0.4'};transition:all 0.15s;`;
-        if (available) {
-          btn.onclick = () => {
-            document.querySelectorAll('#size-options button').forEach(b => {
-              b.style.background = '#fff'; b.style.color = 'var(--dark)'; b.style.borderColor = 'var(--border)';
-            });
-            btn.style.background = 'var(--dark)'; btn.style.color = '#fff'; btn.style.borderColor = 'var(--dark)';
-            selectedVariantId = parseInt(v.id);
-            document.getElementById('size-error').style.display = 'none';
-          };
-        }
+        btn.onclick = () => {
+          document.querySelectorAll('#size-options .size-btn').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          selectedVariantId = v.id;
+          selectedVariantTitle = v.title;
+          document.getElementById('size-error').style.display = 'none';
+        };
         sizeContainer.appendChild(btn);
       });
     }
@@ -894,8 +1041,8 @@ function openModal(img, title, vendor, price, desc, handle) {
   document.getElementById('flocage-name').value = '';
   document.getElementById('flocage-number').value = '';
   document.getElementById('flocage-preview').style.display = 'none';
-  document.getElementById('modal-add-btn').style.display = 'block';
-  document.getElementById('modal-adding').style.display = 'none';
+  document.getElementById('modal-add-btn').disabled = false;
+  document.getElementById('modal-add-btn').textContent = '🛒 Ajouter au panier';
 
   document.getElementById('product-modal').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -909,73 +1056,151 @@ function closeModalDirect() {
   document.body.style.overflow = '';
 }
 
-// ========== SHOPIFY AJAX CART ==========
-async function addToShopifyCart() {
+// ========== CART STATE ==========
+let cart = []; // [{variantId, title, sizeName, img, price, flocageName, flocageNumber, qty}]
+
+function addToCart() {
   if (!selectedVariantId) {
     document.getElementById('size-error').style.display = 'block';
-    document.getElementById('size-options').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    document.getElementById('size-options').scrollIntoView({ behavior:'smooth', block:'nearest' });
     return;
   }
 
-  const flocageName = (document.getElementById('flocage-name').value || '').trim();
-  const flocageNumber = (document.getElementById('flocage-number').value || '').trim();
+  const flocageName  = (document.getElementById('flocage-name').value  || '').trim();
+  const flocageNumber= (document.getElementById('flocage-number').value || '').trim();
+  const img   = currentProduct.images && currentProduct.images[0] ? currentProduct.images[0].src : '';
+  const variant = currentProduct.variants.find(v => v.id == selectedVariantId);
+  const price = variant ? parseFloat(variant.price) : 0;
 
-  const properties = {};
-  if (flocageName) properties['Nom flocage'] = flocageName;
-  if (flocageNumber) properties['Numéro flocage'] = flocageNumber;
-
-  document.getElementById('modal-add-btn').style.display = 'none';
-  document.getElementById('modal-adding').style.display = 'block';
-
-  try {
-    const payload = {
-      items: [{
-        id: selectedVariantId,
-        quantity: 1,
-        properties: Object.keys(properties).length ? properties : undefined
-      }]
-    };
-
-    const res = await fetch(`https://${SHOPIFY_DOMAIN}/cart/add.js`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
-      body: JSON.stringify(payload),
-      credentials: 'include'
+  // Find existing identical item
+  const key = `${selectedVariantId}|${flocageName}|${flocageNumber}`;
+  const existing = cart.find(i => i.key === key);
+  if (existing) {
+    existing.qty++;
+  } else {
+    cart.push({
+      key, variantId: selectedVariantId, title: currentProduct.title,
+      vendor: currentProduct.vendor, sizeName: selectedVariantTitle,
+      img, price, flocageName, flocageNumber, qty: 1
     });
+  }
 
-    if (res.ok) {
-      closeModalDirect();
-      // Open Shopify native cart — redirect to cart page on the Shopify storefront
-      window.location.href = `https://${SHOPIFY_DOMAIN}/cart`;
-    } else {
-      throw new Error('Erreur ' + res.status);
-    }
-  } catch(e) {
-    // Fallback: redirect to product page with variant pre-selected
-    closeModalDirect();
-    let url = `https://${SHOPIFY_DOMAIN}/cart/add?id=${selectedVariantId}&quantity=1`;
-    const flocageName = (document.getElementById('flocage-name') ? document.getElementById('flocage-name').value : '').trim();
-    const flocageNumber = (document.getElementById('flocage-number') ? document.getElementById('flocage-number').value : '').trim();
-    if (flocageName || flocageNumber) {
-      let note = '';
-      if (flocageName) note += 'Nom: ' + flocageName + ' ';
-      if (flocageNumber) note += 'Numéro: ' + flocageNumber;
-      url += '&return_to=/cart&note=' + encodeURIComponent(note.trim());
-    } else {
-      url += '&return_to=/cart';
-    }
-    window.location.href = `https://${SHOPIFY_DOMAIN}` + url.replace(`https://${SHOPIFY_DOMAIN}`, '');
-  } finally {
-    document.getElementById('modal-add-btn').style.display = 'block';
-    document.getElementById('modal-adding').style.display = 'none';
+  updateCartBadge();
+  closeModalDirect();
+  showToast('✅ ' + currentProduct.title + (selectedVariantTitle ? ' — ' + selectedVariantTitle : '') + ' ajouté !');
+}
+
+function updateCartBadge() {
+  const total = cart.reduce((s, i) => s + i.qty, 0);
+  const badge = document.getElementById('nav-cart-count');
+  badge.textContent = total;
+  badge.style.display = total > 0 ? 'inline' : 'none';
+}
+
+// ========== CART DRAWER ==========
+function openCart() {
+  renderCartDrawer();
+  document.getElementById('cart-overlay').classList.add('open');
+  document.getElementById('cart-drawer').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeCart() {
+  document.getElementById('cart-overlay').classList.remove('open');
+  document.getElementById('cart-drawer').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function renderCartDrawer() {
+  const itemsEl  = document.getElementById('cart-items');
+  const emptyEl  = document.getElementById('cart-empty-msg');
+  const footerEl = document.getElementById('cart-footer');
+  const countLbl = document.getElementById('cart-count-label');
+
+  if (cart.length === 0) {
+    itemsEl.innerHTML = '';
+    emptyEl.style.display = 'block';
+    footerEl.style.display = 'none';
+    countLbl.textContent = '';
+    return;
+  }
+
+  emptyEl.style.display = 'none';
+  footerEl.style.display = 'block';
+  const totalQty = cart.reduce((s,i) => s+i.qty, 0);
+  countLbl.textContent = `(${totalQty} article${totalQty>1?'s':''})`;
+
+  itemsEl.innerHTML = cart.map((item, idx) => {
+    const imgHtml = item.img
+      ? `<img class="cart-item-img" src="${item.img}" alt="${item.title}">`
+      : `<div class="cart-item-placeholder">🎽</div>`;
+    const sizeHtml   = item.sizeName    ? `<div class="cart-item-size">Taille : <strong>${item.sizeName}</strong></div>` : '';
+    const flocageHtml= (item.flocageName||item.flocageNumber)
+      ? `<div class="cart-item-flocage">✍️ ${item.flocageName?item.flocageName.toUpperCase():''}${item.flocageName&&item.flocageNumber?' ':''}${item.flocageNumber?'#'+item.flocageNumber:''}</div>`
+      : '';
+    return `<div class="cart-item">
+      ${imgHtml}
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.title}</div>
+        ${sizeHtml}${flocageHtml}
+        <div class="cart-item-price">${(item.price*item.qty).toFixed(2).replace('.',',')} €</div>
+        <div class="cart-item-controls">
+          <button class="qty-btn" onclick="changeQty(${idx},-1)">−</button>
+          <span class="qty-val">${item.qty}</span>
+          <button class="qty-btn" onclick="changeQty(${idx},+1)">+</button>
+          <button class="remove-item-btn" onclick="removeItem(${idx})" title="Supprimer">🗑</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  const total = cart.reduce((s,i) => s+i.price*i.qty, 0);
+  document.getElementById('cart-total-price').textContent = total.toFixed(2).replace('.',',') + ' €';
+
+  // Livraison offerte à partir de 80€
+  const seuil = 80;
+  const reste = seuil - total;
+  const livrEl = document.getElementById('cart-livraison-bar');
+  if (reste > 0) {
+    livrEl.innerHTML = `🚚 Plus que <strong>${reste.toFixed(2).replace('.',',')} €</strong> pour la livraison offerte !`;
+  } else {
+    livrEl.innerHTML = `🎉 <strong>Livraison offerte</strong> !`;
+    livrEl.style.background = 'linear-gradient(135deg,#f0fdf4,#dcfce7)';
   }
 }
 
+function changeQty(idx, delta) {
+  cart[idx].qty += delta;
+  if (cart[idx].qty <= 0) cart.splice(idx, 1);
+  updateCartBadge();
+  renderCartDrawer();
+}
+function removeItem(idx) {
+  cart.splice(idx, 1);
+  updateCartBadge();
+  renderCartDrawer();
+}
+
+// ========== CHECKOUT ==========
+function procederPaiement() {
+  if (cart.length === 0) return;
+  // Build Shopify checkout URL: /cart/variantId:qty,variantId2:qty2
+  const parts = cart.map(i => `${i.variantId}:${i.qty}`).join(',');
+  // Build order note with flocage details
+  const notes = cart
+    .filter(i => i.flocageName || i.flocageNumber)
+    .map((i, n) => `${i.title}${i.sizeName?' ('+i.sizeName+')':''}: Nom=${i.flocageName||'-'} Num=${i.flocageNumber||'-'}`)
+    .join(' | ');
+  let url = `https://${SHOPIFY_DOMAIN}/cart/${parts}?checkout`;
+  if (notes) url = `https://${SHOPIFY_DOMAIN}/cart/${parts}?note=${encodeURIComponent(notes)}&checkout`;
+  window.location.href = url;
+}
+
+// ========== TOAST ==========
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
+  setTimeout(() => t.classList.remove('show'), 2800);
 }
 
 function updateFlocagePreview() {
