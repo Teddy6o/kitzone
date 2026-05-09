@@ -24,6 +24,7 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   body { font-family: var(--font-body); background: var(--light); color: var(--dark); min-height: 100vh; }
+
   /* NAV */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
@@ -34,7 +35,7 @@
   .nav-logo {
     font-family: var(--font-title); font-size: 26px; font-weight: 900;
     letter-spacing: -0.5px; color: var(--dark); text-decoration: none;
-    flex-shrink: 0; cursor: pointer;
+    flex-shrink: 0;
   }
   .nav-logo span { color: var(--accent); }
   .nav-links {
@@ -47,23 +48,6 @@
     white-space: nowrap; cursor: pointer; border: none; background: none;
   }
   .nav-link:hover, .nav-link.active { background: var(--light); color: var(--accent); }
-  /* NAV DROPDOWN */
-  .nav-dropdown { position: relative; }
-  .nav-dropdown-menu {
-    display: none; position: absolute; top: calc(100% + 8px); left: 50%;
-    transform: translateX(-50%); background: #fff; border: 1.5px solid var(--border);
-    border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-    min-width: 180px; overflow: hidden; z-index: 1100;
-  }
-  .nav-dropdown:hover .nav-dropdown-menu,
-  .nav-dropdown-menu:hover { display: block; }
-  .nav-dropdown-item {
-    display: block; width: 100%; padding: 10px 16px; font-size: 13px;
-    font-family: var(--font-body); font-weight: 500; color: var(--dark);
-    background: none; border: none; cursor: pointer; text-align: left;
-    transition: background 0.15s;
-  }
-  .nav-dropdown-item:hover { background: var(--light); color: var(--accent); }
   .nav-search {
     display: flex; align-items: center; gap: 8px;
     background: var(--light); border-radius: 24px; padding: 6px 14px;
@@ -77,6 +61,7 @@
     font-family: var(--font-body); width: 100%; color: var(--dark);
   }
   .nav-search input::placeholder { color: var(--gray); }
+
   /* PAGES */
   .page { display: none; padding-top: calc(var(--nav-h) + 24px); min-height: 100vh; animation: fadeIn 0.3s ease; }
   .page.active { display: block; }
@@ -87,6 +72,7 @@
     letter-spacing: -0.5px; line-height: 1.05; margin-bottom: 8px;
   }
   .section-sub { font-size: 15px; color: var(--gray); margin-bottom: 32px; }
+
   /* HERO */
   .hero {
     background: linear-gradient(135deg, #0A0A0A 0%, #1a1a2e 50%, #16213e 100%);
@@ -132,6 +118,11 @@
     font-family: var(--font-title); font-size: 36px; font-weight: 900; color: #fff;
   }
   .hero-stat-label { font-size: 13px; color: rgba(255,255,255,0.5); }
+
+  /* SEARCH RESULTS */
+  .search-results-page { display: none; }
+  .search-results-page.active { display: block; }
+
   /* PRODUCT GRID */
   .products-grid {
     display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -158,8 +149,6 @@
     background: var(--accent); color: #fff; font-size: 11px; font-weight: 700;
     padding: 3px 9px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px;
   }
-  /* Badge spécial enfant */
-  .product-badge.enfant { background: #FF9500; }
   .product-info { padding: 14px; }
   .product-vendor { font-size: 11px; color: var(--gray); text-transform: uppercase; letter-spacing: 0.7px; margin-bottom: 4px; }
   .product-title { font-size: 14px; font-weight: 600; color: var(--dark); margin-bottom: 10px; line-height: 1.35; }
@@ -171,8 +160,9 @@
     font-size: 18px; transition: background 0.15s;
   }
   .product-btn:hover { background: var(--accent); }
+
   /* LEAGUES SECTION */
-  .leagues-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; margin-bottom: 48px; }
+  .leagues-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin-bottom: 48px; }
   .league-card {
     background: #fff; border-radius: var(--radius); padding: 24px 16px;
     text-align: center; cursor: pointer; border: 1.5px solid var(--border);
@@ -180,12 +170,14 @@
   }
   .league-card:hover { border-color: var(--accent); transform: translateY(-2px); }
   .league-emoji { font-size: 42px; margin-bottom: 10px; display: block; }
-  .league-name { font-family: var(--font-title); font-size: 17px; font-weight: 700; }
+  .league-name { font-family: var(--font-title); font-size: 18px; font-weight: 700; }
   .league-count { font-size: 12px; color: var(--gray); margin-top: 4px; }
+
   /* FEATURED */
   .featured-section { background: #fff; border-radius: 20px; padding: 40px; margin-bottom: 40px; box-shadow: var(--shadow); }
   .featured-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
   .see-all { font-size: 14px; color: var(--accent2); font-weight: 500; cursor: pointer; text-decoration: none; border: none; background: none; font-family: var(--font-body); }
+
   /* LOADING */
   .loading-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
   .skeleton {
@@ -198,7 +190,837 @@
   .skeleton-img { height: 220px; }
   .skeleton-text { height: 14px; margin: 14px 14px 6px; border-radius: 6px; }
   .skeleton-text.short { width: 60%; }
-  /* EMPTY STATE */
+
+  /* CONFIG PANEL */
+  .config-panel {
+    background: linear-gradient(135deg, #007AFF11, #FF3B3008);
+    border: 1.5px dashed #007AFF55; border-radius: 16px;
+    padding: 32px; margin-bottom: 32px; text-align: center;
+  }
+  .config-panel h3 { font-family: var(--font-title); font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+  .config-panel p { font-size: 14px; color: var(--gray); margin-bottom: 20px; line-height: 1.6; }
+  .config-inputs { display: flex; flex-direction: column; gap: 12px; max-width: 460px; margin: 0 auto 20px; }
+  .config-input {
+    width: 100%; padding: 11px 16px; border: 1.5px solid var(--border);
+    border-radius: 10px; font-size: 14px; font-family: var(--font-body);
+    outline: none; transition: border-color 0.2s;
+  }
+  .config-input:focus { border-color: var(--accent2); }
+  .config-save {
+    background: var(--accent2); color: #fff; border: none; padding: 12px 28px;
+    border-radius: 10px; font-size: 15px; font-weight: 600; font-family: var(--font-body);
+    cursor: pointer; transition: opacity 0.15s;
+  }
+  .config-save:hover { opacity: 0.88; }
+
+  /* STATES */
   .empty-state { text-align: center; padding: 80px 24px; }
   .empty-state svg { width: 64px; height: 64px; color: var(--border); margin-bottom: 16px; }
-  .empty-state h3
+  .empty-state h3 { font-family: var(--font-title); font-size: 24px; margin-bottom: 8px; }
+  .empty-state p { color: var(--gray); font-size: 15px; }
+
+  /* PAGE HEADER */
+  .page-header {
+    background: linear-gradient(135deg, var(--dark), #1a1a2e);
+    color: #fff; padding: calc(var(--nav-h) + 40px) 0 40px;
+    margin-bottom: 0;
+  }
+  .page-header .container { padding-top: 0; }
+  .page-header-title { font-family: var(--font-title); font-size: 52px; font-weight: 900; letter-spacing: -0.5px; }
+  .page-header-sub { color: rgba(255,255,255,0.55); font-size: 15px; margin-top: 8px; }
+  .page-header-flag { font-size: 48px; margin-bottom: 12px; display: block; }
+
+  /* INLINE SEARCH BAR */
+  .search-bar-container { background: #fff; border-bottom: 1px solid var(--border); padding: 16px 0; position: sticky; top: var(--nav-h); z-index: 100; }
+  .search-bar-inner { display: flex; align-items: center; gap: 12px; max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+  .search-bar-main {
+    display: flex; align-items: center; gap: 10px; background: var(--light);
+    border-radius: 12px; padding: 10px 18px; flex: 1; border: 1.5px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .search-bar-main:focus-within { border-color: var(--accent2); background: #fff; }
+  .search-bar-main svg { width: 18px; height: 18px; color: var(--gray); flex-shrink: 0; }
+  .search-bar-main input { border: none; background: none; outline: none; font-size: 15px; font-family: var(--font-body); width: 100%; }
+  .filter-chips { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0 0; }
+  .chip {
+    background: var(--light); border: 1.5px solid var(--border); color: var(--dark);
+    font-size: 12px; font-weight: 500; padding: 5px 14px; border-radius: 20px;
+    cursor: pointer; transition: all 0.15s; font-family: var(--font-body);
+  }
+  .chip.active { background: var(--dark); color: #fff; border-color: var(--dark); }
+  .chip:hover:not(.active) { border-color: var(--dark); }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.55);
+    z-index: 2000; display: none; align-items: center; justify-content: center;
+    padding: 24px; backdrop-filter: blur(6px);
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: #fff; border-radius: 20px; max-width: 580px; width: 100%;
+    max-height: 90vh; overflow-y: auto; box-shadow: 0 24px 80px rgba(0,0,0,0.25);
+  }
+  .modal-img { width: 100%; aspect-ratio: 1/1; background: var(--light); object-fit: cover; border-radius: 20px 20px 0 0; }
+  .modal-body { padding: 28px; }
+  .modal-vendor { font-size: 12px; color: var(--gray); text-transform: uppercase; letter-spacing: 0.7px; margin-bottom: 6px; }
+  .modal-title { font-family: var(--font-title); font-size: 32px; font-weight: 800; margin-bottom: 16px; }
+  .modal-price { font-family: var(--font-title); font-size: 28px; font-weight: 700; color: var(--accent); margin-bottom: 20px; }
+  .modal-desc { font-size: 14px; color: var(--gray); line-height: 1.7; margin-bottom: 24px; }
+  .modal-actions { display: flex; gap: 12px; }
+  .modal-close-btn {
+    position: absolute; top: 16px; right: 16px; width: 36px; height: 36px;
+    background: rgba(0,0,0,0.5); color: #fff; border: none; border-radius: 50%;
+    cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center;
+  }
+  .modal-inner-wrap { position: relative; }
+  .btn-shopify {
+    flex: 1; background: #5A31F4; color: #fff; border: none; padding: 14px;
+    border-radius: 10px; font-size: 15px; font-weight: 600; font-family: var(--font-body);
+    cursor: pointer; transition: opacity 0.15s; text-decoration: none;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .btn-shopify:hover { opacity: 0.88; }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark); color: rgba(255,255,255,0.5); text-align: center;
+    padding: 40px 24px; font-size: 13px; margin-top: 64px;
+  }
+  footer strong { color: #fff; font-family: var(--font-title); font-size: 18px; }
+
+  /* CONCEPT PAGE */
+  .concept-banner {
+    background: linear-gradient(135deg, #5A31F4, #a855f7);
+    border-radius: 20px; padding: 48px 40px; margin-bottom: 32px; color: #fff; text-align: center;
+  }
+  .concept-banner h2 { font-family: var(--font-title); font-size: 48px; font-weight: 900; margin-bottom: 8px; }
+  .concept-banner p { font-size: 16px; opacity: 0.8; }
+
+  /* NATIONS */
+  .nations-section { margin-bottom: 48px; }
+  .nations-section h3 {
+    font-family: var(--font-title); font-size: 26px; font-weight: 700;
+    margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid var(--border);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .hero-title { font-size: 48px; }
+    .nav-links { display: none; }
+    .products-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .leagues-grid { grid-template-columns: repeat(2, 1fr); }
+    .hero-stats { gap: 24px; }
+  }
+  @media (max-width: 480px) {
+    .products-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  }
+
+  /* TOAST */
+  .toast {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: var(--dark); color: #fff; padding: 12px 24px; border-radius: 12px;
+    font-size: 14px; font-weight: 600; z-index: 9999; opacity: 0;
+    transition: opacity 0.25s, transform 0.25s; pointer-events: none; white-space: nowrap;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" onclick="showPage('home')"><span>Kit</span>Zone</a>
+  <div class="nav-links">
+    <button class="nav-link" onclick="showPage('home')">Accueil</button>
+    <button class="nav-link" onclick="showPage('all')">Maillots</button>
+    <button class="nav-link" onclick="showPage('ligue1')">Ligue 1</button>
+    <button class="nav-link" onclick="showPage('liga')">Liga</button>
+    <button class="nav-link" onclick="showPage('premier')">Premier League</button>
+    <button class="nav-link" onclick="showPage('bundesliga')">Bundesliga</button>
+    <button class="nav-link" onclick="showPage('seriea')">Serie A</button>
+    <button class="nav-link" onclick="showPage('nations')">Nations</button>
+    <button class="nav-link" onclick="showPage('restmonde')">Reste du Monde</button>
+    <button class="nav-link" onclick="showPage('enfant')">Enfant</button>
+    <button class="nav-link" onclick="showPage('concept')">Concept</button>
+  </div>
+  <div class="nav-search">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="nav-search-input" placeholder="Rechercher un maillot..." onkeyup="handleNavSearch(event)">
+  </div>
+</nav>
+
+<!-- CONFIG SHOPIFY -->
+<div id="config-banner" class="config-panel" style="max-width:700px;margin:80px auto 0;display:none;">
+  <h3>🔧 Configuration Shopify</h3>
+  <p>Clique sur le bouton ci-dessous pour connecter ta boutique <strong>tpfrzy-qt.myshopify.com</strong> et afficher tes produits.</p>
+  <div class="config-inputs">
+  </div>
+  <button class="config-save" onclick="saveShopifyConfig()">Connecter ma boutique →</button>
+</div>
+
+<!-- PAGE: HOME -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">⚡ Nouveaux maillots disponibles</div>
+        <h1 class="hero-title">Les meilleurs<br><span>maillots</span> du foot.</h1>
+        <p class="hero-sub">Explorez notre collection de maillots officiels et concepts — championnats, clubs, nations.</p>
+        <div class="hero-ctas">
+          <button class="btn-primary" onclick="showPage('all')">Voir tous les maillots</button>
+          <button class="btn-secondary" onclick="showPage('concept')">Maillots Concept</button>
+        </div>
+        <div class="hero-stats">
+          <div><div class="hero-stat-num" id="stat-products">...</div><div class="hero-stat-label">Maillots disponibles</div></div>
+          <div><div class="hero-stat-num">7</div><div class="hero-stat-label">Grands championnats</div></div>
+          <div><div class="hero-stat-num">🚚</div><div class="hero-stat-label">Livraison rapide</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-body">
+    <div class="container">
+      <!-- LEAGUES -->
+      <div style="margin-bottom:48px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+          <div><div class="section-title">Championnats</div><div class="section-sub">Explore par ligue</div></div>
+        </div>
+        <div class="leagues-grid">
+          <div class="league-card" onclick="showPage('ligue1')"><span class="league-emoji">🇫🇷</span><div class="league-name">Ligue 1</div><div class="league-count">France</div></div>
+          <div class="league-card" onclick="showPage('liga')"><span class="league-emoji">🇪🇸</span><div class="league-name">La Liga</div><div class="league-count">Espagne</div></div>
+          <div class="league-card" onclick="showPage('premier')"><span class="league-emoji">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span><div class="league-name">Premier League</div><div class="league-count">Angleterre</div></div>
+          <div class="league-card" onclick="showPage('bundesliga')"><span class="league-emoji">🇩🇪</span><div class="league-name">Bundesliga</div><div class="league-count">Allemagne</div></div>
+          <div class="league-card" onclick="showPage('seriea')"><span class="league-emoji">🇮🇹</span><div class="league-name">Serie A</div><div class="league-count">Italie</div></div>
+          <div class="league-card" onclick="showPage('nations')"><span class="league-emoji">🌍</span><div class="league-name">Nations</div><div class="league-count">Sélections nationales</div></div>
+          <div class="league-card" onclick="showPage('restmonde')"><span class="league-emoji">🌐</span><div class="league-name">Reste du Monde</div><div class="league-count">MLS, J-League, Eredivisie…</div></div>
+          <div class="league-card" onclick="showPage('enfant')"><span class="league-emoji">👶</span><div class="league-name">Enfant</div><div class="league-count">Ensembles short + t-shirt</div></div>
+        </div>
+      </div>
+
+      <!-- FEATURED -->
+      <div class="featured-section">
+        <div class="featured-header">
+          <div>
+            <div class="section-title">À la une</div>
+            <div class="section-sub">Nos maillots les plus populaires</div>
+          </div>
+          <button class="see-all" onclick="showPage('all')">Tout voir →</button>
+        </div>
+        <div id="home-featured-grid" class="products-grid">
+          <div class="loading-grid" style="grid-column:1/-1;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px;">
+            <div class="skeleton-card skeleton"><div class="skeleton skeleton-img"></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text short"></div></div>
+            <div class="skeleton-card skeleton"><div class="skeleton skeleton-img"></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text short"></div></div>
+            <div class="skeleton-card skeleton"><div class="skeleton skeleton-img"></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text short"></div></div>
+            <div class="skeleton-card skeleton"><div class="skeleton skeleton-img"></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text short"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONCEPT TEASER -->
+      <div class="concept-banner" onclick="showPage('concept')" style="cursor:pointer;">
+        <h2>🎨 Maillots Concept</h2>
+        <p>Des créations uniques et originales qui n'existent nulle part ailleurs.</p>
+        <button class="btn-primary" style="margin-top:20px;">Découvrir →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE: ALL JERSEYS -->
+<div class="page" id="page-all">
+  <div class="page-header"><div class="container"><div class="page-header-title">Tous les Maillots</div><div class="page-header-sub">L'intégralité de notre catalogue</div></div></div>
+  <div class="search-bar-container">
+    <div class="search-bar-inner">
+      <div class="search-bar-main">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" placeholder="Rechercher un maillot, un club, un pays..." onkeyup="filterProducts(this.value,'all-grid')">
+      </div>
+    </div>
+  </div>
+  <div class="page-body"><div class="container"><div id="all-grid" class="products-grid"></div></div></div>
+</div>
+
+<!-- PAGE: LIGUE 1 -->
+<div class="page" id="page-ligue1">
+  <div class="page-header"><div class="container"><span class="page-header-flag">🇫🇷</span><div class="page-header-title">Ligue 1</div><div class="page-header-sub">Tous les clubs de la première division française</div></div></div>
+  <div class="search-bar-container">
+    <div class="search-bar-inner">
+      <div class="search-bar-main">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" placeholder="Rechercher dans la Ligue 1..." onkeyup="filterProducts(this.value,'ligue1-grid')">
+      </div>
+    </div>
+  </div>
+  <div class="page-body"><div class="container"><div id="ligue1-grid" class="products-grid"></div></div></div>
+</div>
+
+<!-- PAGE: LIGA -->
+<div class="page" id="page-liga">
+  <div class="page-header"><div class="container"><span class="page-header-flag">🇪🇸</span><div class="page-header-title">La Liga</div><div class="page-header-sub">Les clubs du championnat espagnol</div></div></div>
+  <div class="search-bar-container">
+    <div class="search-bar-inner">
+      <div class="search-bar-main">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" placeholder="Rechercher dans La Liga..." onkeyup="filterProducts(this.value,'liga-grid')">
+      </div>
+    </div>
+  </div>
+  <div class="page-body"><div class="container"><div id="liga-grid" class="products-grid"></div></div></div>
+</div>
+
+<!-- PAGE: PREMIER LEAGUE -->
+<div class="page" id="page-premier">
+  <div class="page-header"><div class="container"><span class="page-header-flag">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span><div class="page-header-title">Premier League</div><div class="page-header-sub">Les clubs du championnat anglais</div></div></div>
+  <div class="search-bar-container">
+    <div class="search-bar-inner">
+      <div class="search-bar-main">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" placeholder="Rechercher dans la Premier League..." onkeyup="filterProducts(this.value,'premier-grid')">
+      </div>
+    </div>
+  </div>
+  <div class="page-body"><div class="container"><div id="premier-grid" class="products-grid"></div></div></div>
+</div>
+
+<!-- PAGE: BUNDESLIGA -->
+<div class="page" id="page-bundesliga">
+  <div class="page-header"><div class="container"><span class="page-header-flag">🇩🇪</span><div class="page-header-title">Bundesliga</div><div class="page-header-sub">Les clubs du championnat allemand</div></div></div>
+  <div class="search-bar-container">
+    <div class="search-bar-inner">
+      <div class="search-bar-main">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" placeholder="Rechercher dans la Bundesliga..." onkeyup="filterProducts(this.value,'bundesliga-grid')">
+      </div>
+    </div>
+  </div>
+  <div class="page-body"><div class="container"><div id="bundesliga-grid" class="products-grid"></div></div></div>
+</div>
+
+<!-- PAGE: SERIE A -->
+<div class="page" id="page-seriea">
+  <div class="page-header"><div class="container"><span class="page-header-flag">🇮🇹</span><div class="page-header-title">Serie A</div><div class="page-header-sub">Les clubs du championnat italien</div></div></div>
+  <div class="search-bar-container">
+    <div class="search-bar-inner">
+      <div class="search-bar-main">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" placeholder="Rechercher dans la Serie A..." onkeyup="filterProducts(this.value,'seriea-grid')">
+      </div>
+    </div>
+  </div>
+  <div class="page-body"><div class="container"><div id="seriea-grid" class="products-grid"></div></div></div>
+</div>
+
+<!-- PAGE: NATIONS -->
+<div class="page" id="page-nations">
+  <div class="page-header"><div class="container"><span class="page-header-flag">🌍</span><div class="page-header-title">Maillots de Nations</div><div class="page-header-sub">Les sélections nationales du monde entier</div></div></div>
+  <div class="search-bar-container">
+    <div class="search-bar-inner">
+      <div class="search-bar-main">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" placeholder="Rechercher une sélection nationale..." onkeyup="filterProducts(this.value,'nations-grid')">
+      </div>
+    </div>
+  </div>
+  <div class="page-body"><div class="container"><div id="nations-grid" class="products-grid"></div></div></div>
+</div>
+
+<!-- PAGE: CONCEPT -->
+<div class="page" id="page-concept">
+  <div class="page-header" style="background:linear-gradient(135deg,#5A31F4,#a855f7);"><div class="container"><div class="page-header-title">Maillots Concept</div><div class="page-header-sub">Des créations originales et exclusives</div></div></div>
+  <div class="search-bar-container">
+    <div class="search-bar-inner">
+      <div class="search-bar-main">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" placeholder="Rechercher un maillot concept..." onkeyup="filterProducts(this.value,'concept-grid')">
+      </div>
+    </div>
+  </div>
+  <div class="page-body"><div class="container"><div id="concept-grid" class="products-grid"></div></div></div>
+</div>
+
+<!-- PAGE: RESTE DU MONDE -->
+<div class="page" id="page-restmonde">
+  <div class="page-header"><div class="container"><span class="page-header-flag">🌐</span><div class="page-header-title">Reste du Monde</div><div class="page-header-sub">MLS, J-League, Eredivisie et autres championnats</div></div></div>
+  <div class="search-bar-container">
+    <div class="search-bar-inner">
+      <div class="search-bar-main">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" placeholder="Rechercher dans le reste du monde..." onkeyup="filterProducts(this.value,'restmonde-grid')">
+      </div>
+    </div>
+  </div>
+  <div class="page-body"><div class="container"><div id="restmonde-grid" class="products-grid"></div></div></div>
+</div>
+
+<!-- PAGE: ENFANT -->
+<div class="page" id="page-enfant">
+  <div class="page-header" style="background:linear-gradient(135deg,#FF6B6B,#FFD93D);"><div class="container"><span class="page-header-flag">👶</span><div class="page-header-title">Collection Enfant</div><div class="page-header-sub">Ensembles short + t-shirt pour les petits supporters</div></div></div>
+  <div class="search-bar-container">
+    <div class="search-bar-inner">
+      <div class="search-bar-main">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" placeholder="Rechercher un ensemble enfant..." onkeyup="filterProducts(this.value,'enfant-grid')">
+      </div>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="container">
+      <div style="background:linear-gradient(135deg,#FF6B6B18,#FFD93D18);border:1.5px solid #FFD93D55;border-radius:16px;padding:24px 28px;margin-bottom:28px;display:flex;align-items:center;gap:16px;">
+        <span style="font-size:36px;">🎽</span>
+        <div>
+          <div style="font-family:var(--font-title);font-size:20px;font-weight:700;margin-bottom:4px;">Ensembles Short + T-shirt</div>
+          <div style="font-size:14px;color:var(--gray);">Chaque ensemble comprend un short assorti et un t-shirt aux couleurs de votre club favori. Possibilité de personnaliser avec un flocage !</div>
+        </div>
+      </div>
+      <div id="enfant-grid" class="products-grid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE: SEARCH RESULTS -->
+<div class="page" id="page-search">
+  <div class="page-header"><div class="container"><div class="page-header-title">Résultats de recherche</div><div class="page-header-sub" id="search-subtitle"></div></div></div>
+  <div class="page-body"><div class="container"><div id="search-grid" class="products-grid"></div></div></div>
+</div>
+
+<!-- PRODUCT MODAL -->
+<div class="modal-overlay" id="product-modal" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-inner-wrap">
+      <button class="modal-close-btn" onclick="closeModalDirect()">✕</button>
+      <img class="modal-img" id="modal-img" src="" alt="">
+      <div class="modal-body">
+        <div class="modal-vendor" id="modal-vendor"></div>
+        <div class="modal-title" id="modal-title"></div>
+        <div class="modal-price" id="modal-price"></div>
+        <div class="modal-desc" id="modal-desc"></div>
+
+        <!-- TAILLE -->
+        <div style="margin-bottom:20px;">
+          <div style="font-size:12px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:10px;">Choisir la taille</div>
+          <div id="size-options" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
+          <div id="size-error" style="display:none;color:var(--accent);font-size:12px;margin-top:6px;font-weight:600;">⚠️ Veuillez choisir une taille</div>
+        </div>
+
+        <!-- FLOCAGE PERSONNALISATION -->
+        <div style="background:linear-gradient(135deg,#007AFF11,#5A31F408);border:1.5px solid #007AFF33;border-radius:14px;padding:20px;margin-bottom:24px;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
+            <span style="font-size:20px;">✍️</span>
+            <div>
+              <div style="font-family:var(--font-title);font-size:18px;font-weight:700;">Personnaliser le flocage</div>
+              <div style="font-size:12px;color:var(--gray);">Optionnel — laissez vide pour un maillot sans flocage</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <div style="flex:1;min-width:140px;">
+              <label style="font-size:12px;font-weight:600;color:var(--gray);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Nom</label>
+              <input id="flocage-name" type="text" placeholder="ex: Ilyes" maxlength="15" style="width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:var(--font-body);outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--accent2)'" onblur="this.style.borderColor='var(--border)'" oninput="updateFlocagePreview()">
+            </div>
+            <div style="width:90px;">
+              <label style="font-size:12px;font-weight:600;color:var(--gray);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Numéro</label>
+              <input id="flocage-number" type="number" placeholder="7" min="1" max="99" style="width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:var(--font-body);outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--accent2)'" onblur="this.style.borderColor='var(--border)'" oninput="updateFlocagePreview()">
+            </div>
+          </div>
+          <div id="flocage-preview" style="display:none;margin-top:14px;background:#0A0A0A;border-radius:10px;padding:14px 18px;text-align:center;">
+            <div id="flocage-preview-num" style="font-family:var(--font-title);font-size:36px;font-weight:900;color:#fff;line-height:1;"></div>
+            <div id="flocage-preview-name" style="font-family:var(--font-title);font-size:18px;font-weight:700;color:#fff;letter-spacing:2px;margin-top:2px;"></div>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn-primary" id="modal-add-btn" style="width:100%;padding:16px;font-size:16px;" onclick="addToShopifyCart()">
+            🛒 Ajouter au panier
+          </button>
+        </div>
+        <div id="modal-adding" style="display:none;text-align:center;padding:10px;color:var(--gray);font-size:14px;">Ajout en cours…</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<footer>
+  <div><strong>KitZone</strong></div>
+  <div style="margin-top:8px;">© 2025 KitZone. Tous droits réservés. Propulsé par Shopify.</div>
+</footer>
+
+<script>
+// ========== CONFIG ==========
+let SHOPIFY_DOMAIN = '';
+let allProducts = [];
+let collectionProductMap = {}; // collectionHandle -> [productIds]
+
+const COLLECTION_MAP = {
+  'ligue 1': 'ligue1', 'ligue1': 'ligue1',
+  'liga': 'liga',
+  'premier league': 'premier', 'premier': 'premier',
+  'bundesliga': 'bundesliga',
+  'serie a': 'seriea', 'serie-a': 'seriea',
+  'nations': 'nations',
+  'reste du monde': 'restmonde', 'restmonde': 'restmonde', 'mls': 'restmonde', 'j-league': 'restmonde', 'eredivisie': 'restmonde', 'primeira': 'restmonde',
+  'enfant': 'enfant', 'enfants': 'enfant', 'kid': 'enfant', 'kids': 'enfant', 'junior': 'enfant',
+  'concept': 'concept'
+};
+
+function loadConfig() {
+  SHOPIFY_DOMAIN = 'tpfrzy-qt.myshopify.com';
+  localStorage.setItem('kz_domain', SHOPIFY_DOMAIN);
+  document.getElementById('config-banner').style.display = 'none';
+  fetchAllData();
+}
+
+function saveShopifyConfig() {
+  SHOPIFY_DOMAIN = 'tpfrzy-qt.myshopify.com';
+  localStorage.setItem('kz_domain', SHOPIFY_DOMAIN);
+  document.getElementById('config-banner').style.display = 'none';
+  fetchAllData();
+}
+
+// ========== SHOPIFY JSON API (no token needed) ==========
+async function fetchAllData() {
+  try {
+    showSkeletons();
+    const [products, colMap] = await Promise.all([
+      fetchAllProducts(),
+      fetchAllCollectionProducts()
+    ]);
+    allProducts = products;
+    collectionProductMap = colMap;
+    document.getElementById('stat-products').textContent = allProducts.length + '+';
+    distributeProducts();
+    renderGrid('home-featured-grid', allProducts.slice(0, 8));
+  } catch(e) {
+    console.error(e);
+    showError(e.message);
+  }
+}
+
+async function fetchAllProducts(page = 1, acc = []) {
+  const res = await fetch(`https://tpfrzy-qt.myshopify.com/products.json?limit=250&page=${page}`);
+  if (!res.ok) throw new Error('Erreur Shopify ' + res.status);
+  const data = await res.json();
+  const prods = data.products || [];
+  const all = acc.concat(prods);
+  if (prods.length === 250) return fetchAllProducts(page + 1, all);
+  return all;
+}
+
+async function fetchAllCollectionProducts() {
+  const map = {};
+  try {
+    const res = await fetch(`https://tpfrzy-qt.myshopify.com/collections.json?limit=250`);
+    if (!res.ok) return map;
+    const data = await res.json();
+    const collections = data.collections || [];
+    await Promise.all(collections.map(async col => {
+      try {
+        const r = await fetch(`https://tpfrzy-qt.myshopify.com/collections/${col.handle}/products.json?limit=250`);
+        if (!r.ok) return;
+        const d = await r.json();
+        map[col.handle] = { title: col.title, ids: (d.products||[]).map(p => p.id) };
+      } catch(e) {}
+    }));
+  } catch(e) {}
+  return map;
+}
+
+async function fetchCollections() { return []; }
+async function fetchCollectionMappings() { collectionProductMap = {}; }
+
+// ========== DISTRIBUTE PRODUCTS ==========
+function getProductPage(product) {
+  // Check collectionProductMap
+  for (const [handle, info] of Object.entries(collectionProductMap)) {
+    if (info.ids.includes(product.id)) {
+      const title = info.title.toLowerCase().trim();
+      for (const [key, page] of Object.entries(COLLECTION_MAP)) {
+        if (title.includes(key)) return page;
+      }
+    }
+  }
+  // Fallback: tags
+  const tagStr = Array.isArray(product.tags) ? product.tags.join(',') : (product.tags || '');
+  const tags = tagStr.split(',').map(t => t.toLowerCase().trim());
+  for (const t of tags) {
+    for (const [key, page] of Object.entries(COLLECTION_MAP)) {
+      if (t.includes(key)) return page;
+    }
+  }
+  return 'all';
+}
+
+function distributeProducts() {
+  const pages = { ligue1:[], liga:[], premier:[], bundesliga:[], seriea:[], nations:[], restmonde:[], enfant:[], concept:[], all:[] };
+  for (const p of allProducts) {
+    const pg = getProductPage(p);
+    if (pg !== 'all') pages[pg].push(p);
+    pages.all.push(p);
+  }
+  for (const [k, v] of Object.entries(pages)) {
+    const gridId = k === 'all' ? 'all-grid' : k + '-grid';
+    renderGrid(gridId, v);
+  }
+}
+
+// ========== RENDER ==========
+function renderGrid(gridId, products) {
+  const grid = document.getElementById(gridId);
+  if (!grid) return;
+  if (!products || products.length === 0) {
+    grid.innerHTML = emptyState();
+    return;
+  }
+  grid.innerHTML = products.map(p => productCard(p)).join('');
+}
+
+function productCard(p) {
+  const img = p.images && p.images.length > 0 ? p.images[0].src : '';
+  const variant = p.variants && p.variants[0];
+  const price = variant ? parseFloat(variant.price).toFixed(2) + ' EUR' : '';
+  const imgHtml = img
+    ? `<img src="${img}" alt="${p.title}" loading="lazy">`
+    : `<div class="product-img-placeholder">${jerseyIcon()}<span style="font-size:12px;color:#aaa">${p.vendor||''}</span></div>`;
+  const badge = (p.available === false) ? '<div class="product-badge" style="background:#888">Rupture</div>' : '';
+  const safeTitle = (p.title||'').replace(/'/g, "\'").replace(/"/g, '&quot;');
+  const safeVendor = (p.vendor||'').replace(/'/g, "\'");
+  const safePrice = price;
+  const safeDesc = (p.body_html||'').replace(/<[^>]*>/g,'').replace(/'/g, "\'").substring(0, 200);
+  const safeImg = (img||'').replace(/'/g, "\'");
+  const handle = p.handle;
+  return `<div class="product-card" onclick="openModal('${safeImg}','${safeTitle}','${safeVendor}','${safePrice}','${safeDesc}','${handle}')">
+    <div class="product-img">${imgHtml}${badge}</div>
+    <div class="product-info">
+      <div class="product-vendor">${p.vendor||''}</div>
+      <div class="product-title">${p.title}</div>
+      <div class="product-footer">
+        <div class="product-price">${price}</div>
+        <button class="product-btn" onclick="event.stopPropagation();openModal('${safeImg}','${safeTitle}','${safeVendor}','${safePrice}','${safeDesc}','${handle}')">+</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function jerseyIcon() {
+  return `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 8 L8 20 L16 24 L16 56 L48 56 L48 24 L56 20 L44 8 C44 8 40 14 32 14 C24 14 20 8 20 8Z" stroke="#ccc" stroke-width="2" fill="#f5f5f5"/></svg>`;
+}
+
+function emptyState() {
+  return `<div class="empty-state" style="grid-column:1/-1;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <h3>Aucun maillot trouvé</h3>
+    <p>Cette collection est vide ou aucun produit ne correspond.</p>
+  </div>`;
+}
+
+// ========== SEARCH ==========
+function filterProducts(query, gridId) {
+  const q = query.toLowerCase().trim();
+  const relevantProducts = allProducts.filter(p => {
+    if (!q) return true;
+    const tagStr = Array.isArray(p.tags) ? p.tags.join(' ') : (p.tags || ''); const haystack = [p.title, p.vendor, p.body_html, tagStr].join(' ').toLowerCase();
+    return haystack.includes(q);
+  });
+  renderGrid(gridId, relevantProducts);
+}
+
+function handleNavSearch(event) {
+  const q = document.getElementById('nav-search-input').value.trim();
+  if (event.key === 'Enter' || q.length >= 2) {
+    if (!q) return;
+    const results = allProducts.filter(p => {
+      const tagStr = Array.isArray(p.tags) ? p.tags.join(' ') : (p.tags || ''); const haystack = [p.title, p.vendor, p.body_html, tagStr].join(' ').toLowerCase();
+      return haystack.includes(q.toLowerCase());
+    });
+    document.getElementById('search-subtitle').textContent = `${results.length} résultat(s) pour "${q}"`;
+    renderGrid('search-grid', results);
+    showPage('search');
+  }
+}
+
+// ========== MODAL ==========
+let currentProduct = null;
+let selectedVariantId = null;
+
+function openModal(img, title, vendor, price, desc, handle) {
+  currentProduct = allProducts.find(p => p.handle === handle) || null;
+  selectedVariantId = null;
+
+  document.getElementById('modal-img').src = img || '';
+  document.getElementById('modal-img').style.display = img ? 'block' : 'none';
+  document.getElementById('modal-title').textContent = title;
+  document.getElementById('modal-vendor').textContent = vendor;
+  document.getElementById('modal-price').textContent = price;
+  document.getElementById('modal-desc').textContent = desc || 'Découvrez ce maillot de grande qualité.';
+
+  // Build size buttons from variants
+  const sizeContainer = document.getElementById('size-options');
+  document.getElementById('size-error').style.display = 'none';
+  sizeContainer.innerHTML = '';
+
+  if (currentProduct && currentProduct.variants) {
+    const variants = currentProduct.variants;
+    // If only one variant with no real title, auto-select it and hide size picker
+    const hasRealSizes = variants.length > 1 || (variants[0] && variants[0].title !== 'Default Title');
+    if (!hasRealSizes) {
+      selectedVariantId = variants[0].id;
+      sizeContainer.closest('div[style*="margin-bottom:20px"]').style.display = 'none';
+    } else {
+      sizeContainer.closest('div[style*="margin-bottom:20px"]').style.display = 'block';
+      variants.forEach(v => {
+        const btn = document.createElement('button');
+        btn.textContent = v.title;
+        btn.dataset.variantId = v.id;
+        const available = v.available !== false;
+        btn.style.cssText = `padding:8px 16px;border-radius:8px;border:1.5px solid var(--border);background:#fff;font-family:var(--font-body);font-size:13px;font-weight:600;cursor:${available ? 'pointer' : 'not-allowed'};opacity:${available ? '1' : '0.4'};transition:all 0.15s;`;
+        if (available) {
+          btn.onclick = () => {
+            document.querySelectorAll('#size-options button').forEach(b => {
+              b.style.background = '#fff'; b.style.color = 'var(--dark)'; b.style.borderColor = 'var(--border)';
+            });
+            btn.style.background = 'var(--dark)'; btn.style.color = '#fff'; btn.style.borderColor = 'var(--dark)';
+            selectedVariantId = parseInt(v.id);
+            document.getElementById('size-error').style.display = 'none';
+          };
+        }
+        sizeContainer.appendChild(btn);
+      });
+    }
+  }
+
+  // Reset flocage
+  document.getElementById('flocage-name').value = '';
+  document.getElementById('flocage-number').value = '';
+  document.getElementById('flocage-preview').style.display = 'none';
+  document.getElementById('modal-add-btn').style.display = 'block';
+  document.getElementById('modal-adding').style.display = 'none';
+
+  document.getElementById('product-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(event) {
+  if (event.target === document.getElementById('product-modal')) closeModalDirect();
+}
+function closeModalDirect() {
+  document.getElementById('product-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ========== SHOPIFY AJAX CART ==========
+async function addToShopifyCart() {
+  if (!selectedVariantId) {
+    document.getElementById('size-error').style.display = 'block';
+    document.getElementById('size-options').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    return;
+  }
+
+  const flocageName = (document.getElementById('flocage-name').value || '').trim();
+  const flocageNumber = (document.getElementById('flocage-number').value || '').trim();
+
+  const properties = {};
+  if (flocageName) properties['Nom flocage'] = flocageName;
+  if (flocageNumber) properties['Numéro flocage'] = flocageNumber;
+
+  document.getElementById('modal-add-btn').style.display = 'none';
+  document.getElementById('modal-adding').style.display = 'block';
+
+  try {
+    const payload = {
+      items: [{
+        id: selectedVariantId,
+        quantity: 1,
+        properties: Object.keys(properties).length ? properties : undefined
+      }]
+    };
+
+    const res = await fetch(`https://${SHOPIFY_DOMAIN}/cart/add.js`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+      body: JSON.stringify(payload),
+      credentials: 'include'
+    });
+
+    if (res.ok) {
+      closeModalDirect();
+      // Open Shopify native cart — redirect to cart page on the Shopify storefront
+      window.location.href = `https://${SHOPIFY_DOMAIN}/cart`;
+    } else {
+      throw new Error('Erreur ' + res.status);
+    }
+  } catch(e) {
+    // Fallback: redirect to product page with variant pre-selected
+    closeModalDirect();
+    let url = `https://${SHOPIFY_DOMAIN}/cart/add?id=${selectedVariantId}&quantity=1`;
+    const flocageName = (document.getElementById('flocage-name') ? document.getElementById('flocage-name').value : '').trim();
+    const flocageNumber = (document.getElementById('flocage-number') ? document.getElementById('flocage-number').value : '').trim();
+    if (flocageName || flocageNumber) {
+      let note = '';
+      if (flocageName) note += 'Nom: ' + flocageName + ' ';
+      if (flocageNumber) note += 'Numéro: ' + flocageNumber;
+      url += '&return_to=/cart&note=' + encodeURIComponent(note.trim());
+    } else {
+      url += '&return_to=/cart';
+    }
+    window.location.href = `https://${SHOPIFY_DOMAIN}` + url.replace(`https://${SHOPIFY_DOMAIN}`, '');
+  } finally {
+    document.getElementById('modal-add-btn').style.display = 'block';
+    document.getElementById('modal-adding').style.display = 'none';
+  }
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function updateFlocagePreview() {
+  const name = (document.getElementById('flocage-name').value || '').trim().toUpperCase();
+  const number = (document.getElementById('flocage-number').value || '').trim();
+  const preview = document.getElementById('flocage-preview');
+  if (name || number) {
+    preview.style.display = 'block';
+    document.getElementById('flocage-preview-num').textContent = number || '';
+    document.getElementById('flocage-preview-name').textContent = name || '';
+  } else {
+    preview.style.display = 'none';
+  }
+}
+
+// ========== NAV ==========
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  window.scrollTo(0, 0);
+}
+
+// ========== SKELETONS ==========
+function showSkeletons() {
+  const skeletonHtml = Array(4).fill(0).map(() =>
+    `<div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text short"></div></div>`
+  ).join('');
+  ['home-featured-grid','all-grid','ligue1-grid','liga-grid','premier-grid','bundesliga-grid','seriea-grid','nations-grid','restmonde-grid','enfant-grid','concept-grid'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = `<div style="grid-column:1/-1;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px;">${skeletonHtml}</div>`;
+  });
+}
+
+function showError(msg) {
+  const html = `<div class="empty-state" style="grid-column:1/-1;"><h3>Erreur de connexion Shopify</h3><p>${msg}</p><button class="btn-primary" style="margin-top:16px;" onclick="document.getElementById('config-banner').style.display='block';document.getElementById('config-banner').scrollIntoView()">Reconfigurer</button></div>`;
+  ['home-featured-grid','all-grid','ligue1-grid','liga-grid','premier-grid','bundesliga-grid','seriea-grid','nations-grid','restmonde-grid','enfant-grid','concept-grid'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.innerHTML = html;
+  });
+}
+
+// ========== INIT ==========
+window.addEventListener('DOMContentLoaded', () => {
+  loadConfig();
+});
+</script>
+</body>
+</html>
